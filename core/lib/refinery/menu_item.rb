@@ -58,7 +58,7 @@ module Refinery
     end
 
     def has_children?
-      @has_children ||= (rgt > lft + 1)
+      @has_children ||= !leaf?
     end
     # really, they're the same.
     alias_method :has_descendants?, :has_children?
@@ -69,6 +69,10 @@ module Refinery
 
     def orphan?
       !has_parent?
+    end
+
+    def leaf?
+      @leaf ||= rgt.to_i - lft.to_i == 1
     end
 
     def inspect
