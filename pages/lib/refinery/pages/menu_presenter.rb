@@ -106,7 +106,7 @@ module Refinery
       end
 
       def menu_item_children(menu_item)
-        if !levels || menu_item.ancestors.length < levels
+        if !levels || depth < levels
           menu_item.children
         else
           []
