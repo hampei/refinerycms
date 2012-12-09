@@ -32,6 +32,7 @@ module Refinery
         render_menu(roots) if roots.present?
       end
 
+      private
       def render_menu(items)
         content_tag(menu_tag, :id => dom_id, :class => css) do
           render_menu_items(items)
