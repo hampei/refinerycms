@@ -10,10 +10,10 @@ module Refinery
       include ActionView::Helpers::UrlHelper
       include ActiveSupport::Configurable
 
-      config_accessor :roots, :nav_tag, :list_tag, :list_item_tag, :css, :dom_id, :levels
+      config_accessor :roots, :menu_tag, :list_tag, :list_item_tag, :css, :dom_id, :levels
       self.dom_id = 'menu'
       self.css = 'menu clearfix'
-      self.nav_tag = :nav
+      self.menu_tag = :nav
       self.list_tag = :ul
       self.list_item_tag = :li
       def roots
@@ -29,10 +29,12 @@ module Refinery
       end
 
       def to_html
-        if roots.present?
-          content_tag(nav_tag, :id => dom_id, :class => css) do
-            render_menu_items(roots)
-          end
+        render_menu(roots) if roots.present?
+      end
+
+      def render_menu(items)
+        content_tag(menu_tag, :id => dom_id, :class => css) do
+          render_menu_items(items)
         end
       end
 
