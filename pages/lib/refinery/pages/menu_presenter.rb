@@ -10,12 +10,16 @@ module Refinery
       include ActionView::Helpers::UrlHelper
       include ActiveSupport::Configurable
 
-      config_accessor :roots, :menu_tag, :list_tag, :list_item_tag, :css, :dom_id, :levels
+      config_accessor :roots, :menu_tag, :list_tag, :list_item_tag, :css, :dom_id,
+                      :levels, :selected_css, :first_css, :last_css
       self.dom_id = 'menu'
       self.css = 'menu clearfix'
       self.menu_tag = :nav
       self.list_tag = :ul
       self.list_item_tag = :li
+      self.selected_css = :selected
+      self.first_css = :first
+      self.last_css = :last
       def roots
         config.roots.presence || collection.roots
       end
@@ -94,9 +98,9 @@ module Refinery
       def menu_item_css(menu_item, index)
         css = []
 
-        css << Refinery::Core.menu_css[:selected] if selected_page_or_descendant_page_selected?(menu_item)
-        css << Refinery::Core.menu_css[:first] if index == 0
-        css << Refinery::Core.menu_css[:last] if index == menu_item.shown_siblings.length
+        css << selected_css if selected_page_or_descendant_page_selected?(menu_item)
+        css << first_css if index == 0
+        css << last_css if index == menu_item.shown_siblings.length
 
         css.reject(&:blank?)
       end
