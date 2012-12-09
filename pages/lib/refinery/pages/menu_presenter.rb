@@ -11,7 +11,7 @@ module Refinery
       include ActiveSupport::Configurable
 
       config_accessor :roots, :menu_tag, :list_tag, :list_item_tag, :css, :dom_id,
-                      :levels, :selected_css, :first_css, :last_css
+                      :max_depth, :selected_css, :first_css, :last_css
       self.dom_id = 'menu'
       self.css = 'menu clearfix'
       self.menu_tag = :nav
@@ -106,11 +106,11 @@ module Refinery
       end
 
       def menu_item_children(menu_item)
-        if !levels || depth < levels
-          menu_item.children
-        else
-          []
-        end
+        within_max_depth?(menu_item) ? menu_item.children : []
+      end
+
+      def within_max_depth?(menu_item)
+        !max_depth || menu_item.depth < max_depth
       end
 
     end
