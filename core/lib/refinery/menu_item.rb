@@ -58,7 +58,7 @@ module Refinery
     end
 
     def has_children?
-      @has_children ||= !leaf?
+      !leaf?
     end
     # really, they're the same.
     alias_method :has_descendants?, :has_children?
