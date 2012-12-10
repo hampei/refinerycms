@@ -119,7 +119,7 @@ module Refinery
       end
 
       def fast_menu
-        live.in_menu.order('lft ASC').includes(:translations)
+        live.in_menu.order(arel_table[:lft]).includes(:parent, :translations)
       end
 
       # Wrap up the logic of finding the pages based on the translations table.
